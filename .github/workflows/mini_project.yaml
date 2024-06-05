@@ -1,0 +1,40 @@
+name: Greeting Workflow
+
+on:
+  workflow_dispatch:
+    inputs:
+      user_name:
+        description: 'Name of the user'
+        required: true
+        default: 'John Doe'
+      favorite_color:
+        description: 'Favorite color of the user'
+        required: true
+        default: 'blue'
+
+jobs:
+  collect-inputs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Collect Inputs
+        id: collect
+        run: |
+          echo "user_name=${{ github.event.inputs.user_name }}" >> $GITHUB_ENV
+          echo "favorite_color=${{ github.event.inputs.favorite_color }}" >> $GITHUB_ENV
+
+  generate-greeting:
+    runs-on: ubuntu-latest
+    needs: collect-inputs
+    steps:
+      - name: Generate Greeting
+        id: greeting
+        run: |
+          GREETING="Hello, ${{ env.user_name }}! Your favorite color is ${{ env.favorite_color }}."
+          echo "greeting=${GREETING}" >> $GITHUB_ENV
+
+  display-greeting:
+    runs-on: ubuntu-latest
+    needs: generate-greeting
+    steps:
+      - name: Display Greeting
+        run: echo ${{ env.greeting }}
