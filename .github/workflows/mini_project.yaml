@@ -22,9 +22,9 @@ jobs:
       - name: Collect Inputs
         id: set-outputs
         run: |
-          echo "user_name=${{ github.event.inputs.user_name }}" >> $GITHUB_ENV
+          echo "user_name=${{ github.event.inputs.user_name }}" >> $GITHUB_OUTPUT
           echo "user_name=${{ github.event.inputs.user_name }}"
-          echo "favorite_color=${{ github.event.inputs.favorite_color }}" >> $GITHUB_ENV
+          echo "favorite_color=${{ github.event.inputs.favorite_color }}" >> $GITHUB_OUTPUT
           echo "favorite_color=${{ github.event.inputs.favorite_color }}"
 
   generate-greeting:
@@ -37,7 +37,7 @@ jobs:
         id: set-greeting
         run: |
           GREETING="Hello, ${{ needs.collect-inputs.outputs.user_name }}! Your favorite color is ${{ needs.collect-inputs.outputs.favorite_color }}."
-          echo "greeting=$GREETING" >> $GITHUB_ENV
+          echo "greeting=$GREETING" >> $GITHUB_OUTPUT
           echo "greeting=$GREETING"
 
   display-greeting:
