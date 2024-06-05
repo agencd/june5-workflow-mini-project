@@ -1,6 +1,8 @@
 name: Greeting Workflow
 
 on:
+  push:
+    branche: [ main ]
   workflow_dispatch:
     inputs:
       user_name:
